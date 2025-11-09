@@ -283,23 +283,7 @@
             menu.classList.toggle('open');
         }
 
-        const eventData = {
-            event1: { title: 'Event 1', image: '/public/event1.jpg', registerLink: '#register-event1' },
-            event2: { title: 'Event 2', image: '/public/event2.jpg', registerLink: '#register-event2' },
-            event3: { title: 'Event 3', image: '/public/event3.jpg', registerLink: '#register-event3' },
-            event4: { title: 'Event 4', image: '/public/event4.jpg', registerLink: '#register-event4' },
-        };
-
-        function openModal(eventId) {
-            const modal = document.getElementById('eventModal');
-            const data = eventData[eventId];
-            document.getElementById('modalTitle').textContent = data.title;
-            document.getElementById('modalImage').src = data.image;
-            document.getElementById('modalImage').alt = data.title;
-            document.getElementById('modalRegister').href = data.registerLink;
-            modal.classList.remove('hidden');
-        }
-
+        // Modal close function only
         function closeModal(event) {
             if (!event || event.target.id === 'eventModal') {
                 document.getElementById('eventModal').classList.add('hidden');

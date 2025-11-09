@@ -52,7 +52,7 @@ async def get_carousel(offset: int = 0):
         <div class="cursor-pointer group {mobile_class}" onclick="openModal('event{event_num}')">
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
                 <div class="flex-1 overflow-hidden bg-gray-100">
-                    <img src="/public/event{event_num}.jpeg" alt="Event {event_num}" class="w-full h-full object-contain hover:scale-105 transition-transform duration-300">
+                    <img src="/public/events/event{event_num}.jpeg" alt="Event {event_num}" class="w-full h-full object-contain hover:scale-105 transition-transform duration-300">
                 </div>
                 <div class="p-6 bg-gradient-to-br from-[#9B6D5A]/5 to-[#9B6D5A]/10 group-hover:from-[#9B6D5A]/10 group-hover:to-[#9B6D5A]/20 transition-all duration-300">
                     <h3 class="text-xl font-bold text-gray-800 mb-2">Event {event_num}</h3>
