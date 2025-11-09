@@ -53,7 +53,7 @@ async def get_carousel(offset: int = 0):
              hx-get="/api/modal/event{event_num}" 
              hx-target="#modal-container" 
              hx-swap="innerHTML">
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-[400px] md:h-[500px]">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-[380px] md:h-[550px]">
                 <img src="/public/events/event{event_num}.jpeg" alt="Event {event_num}" class="w-full h-full object-cover">
             </div>
         </div>
@@ -65,26 +65,44 @@ async def get_carousel(offset: int = 0):
 @app.get("/api/modal/{event_id}")
 async def get_modal(event_id: str):
     """Return modal HTML for an event"""
-    event_title = event_id.replace('event', 'Event ')
+    
+    event_links = {
+        'event1': 'https://example.com/register-event1',
+        'event2': 'https://example.com/register-event2',
+        'event3': 'https://example.com/register-event3',
+        'event4': 'https://example.com/register-event4'
+    }
+    
+    registration_link = event_links.get(event_id, '#register')
     
     html = f"""
     <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" 
          id="event-modal"
          onclick="if(event.target.id === 'event-modal') document.getElementById('modal-container').innerHTML = ''">
-        <div class="bg-white rounded-lg max-w-md w-full p-6" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-start mb-4">
-                <h2 class="text-2xl font-bold text-gray-800">{event_title}</h2>
-                <button onclick="document.getElementById('modal-container').innerHTML = ''" 
-                        class="text-gray-500 hover:text-gray-700">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
+        <div class="relative bg-white rounded-lg max-w-5xl w-full max-h-[85vh] flex flex-col md:flex-row overflow-hidden" onclick="event.stopPropagation()">
+            <!-- Close button absolutely positioned in top-right corner -->
+            <button onclick="document.getElementById('modal-container').innerHTML = ''" 
+                    class="absolute top-3 right-3 z-20 bg-white/90 rounded-full p-2 shadow-lg text-gray-700 hover:text-gray-900 hover:bg-white">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+            
+            <!-- Flyer image takes 80% width on desktop, full on mobile -->
+            <div class="w-full md:w-[80%] bg-gray-50 flex items-center justify-center p-3 md:p-6">
+                <img src="/public/events/{event_id}.jpeg" 
+                     alt="Event Flyer" 
+                     class="max-w-full h-auto max-h-[55vh] md:max-h-[80vh] object-contain">
             </div>
-            <a href="#register" 
-               class="inline-block w-full text-center bg-[#9B6D5A] text-white px-6 py-3 rounded-lg hover:bg-[#8A5C49] transition font-semibold">
-                Register Now
-            </a>
+            
+            <!-- Registration section takes 20% width on desktop -->
+            <div class="w-full md:w-[20%] flex items-center justify-center p-4 md:p-8 bg-white border-t md:border-t-0 md:border-l border-gray-200">
+                <a href="{registration_link}" 
+                   target="_blank"
+                   class="w-full text-center bg-[#9B6D5A] text-white px-6 py-3 md:py-4 rounded-lg hover:bg-[#8A5C49] transition font-semibold">
+                    Register Now
+                </a>
+            </div>
         </div>
     </div>
     """
