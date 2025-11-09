@@ -3,38 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Greater Islamic Center - Round Rock, TX</title>
+    <title>Georgetown Islamic Center - Round Rock, TX</title>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
-        .carousel-item { display: none; }
-        .carousel-item.active { display: block; }
         #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
         #mobile-menu.open { max-height: 500px; }
+        /* Updated color scheme to match brown logo */
+        .brand-brown { color: #9B6D5A; }
+        .bg-brand-brown { background-color: #9B6D5A; }
+        .hover-brand-brown:hover { background-color: #8A5C49; }
+        .border-brand-brown { border-color: #9B6D5A; }
+        .ring-brand-brown { --tw-ring-color: #9B6D5A; }
     </style>
 </head>
 <body class="bg-gray-50">
     <!-- Navigation -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <svg class="h-10 w-10 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2L3 9v12h6v-7h6v7h6V9l-9-7z"/>
-                        </svg>
-                    </div>
-                    <span class="ml-2 text-xl font-bold text-gray-800">GIC Masjid</span>
+            <!-- Fixed alignment and added logo image -->
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-3">
+                    <img src="/logo.png" alt="Georgetown Islamic Center" class="h-16 w-auto">
+                    <span class="text-xl font-bold text-gray-800 hidden sm:block">Georgetown Islamic Center</span>
                 </div>
                 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="text-gray-700 hover:text-green-600 font-medium transition">Home</a>
-                    <a href="#about" class="text-gray-700 hover:text-green-600 font-medium transition">About</a>
-                    <a href="#education" class="text-gray-700 hover:text-green-600 font-medium transition">Education</a>
-                    <a href="#donate" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Donate</a>
+                <!-- Desktop Menu - Fixed alignment with items-center -->
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="#home" class="text-gray-700 hover:text-[#9B6D5A] font-medium transition">Home</a>
+                    <a href="#about" class="text-gray-700 hover:text-[#9B6D5A] font-medium transition">About</a>
+                    <a href="#education" class="text-gray-700 hover:text-[#9B6D5A] font-medium transition">Education</a>
+                    <a href="#donate" class="bg-[#9B6D5A] text-white px-5 py-2 rounded-lg hover:bg-[#8A5C49] transition">Donate</a>
                 </div>
                 
                 <!-- Mobile Menu Button -->
@@ -48,60 +49,51 @@
             <!-- Mobile Menu -->
             <div id="mobile-menu" class="md:hidden">
                 <div class="px-2 pt-2 pb-3 space-y-1">
-                    <a href="#home" class="block px-3 py-2 text-gray-700 hover:bg-green-50 rounded">Home</a>
-                    <a href="#about" class="block px-3 py-2 text-gray-700 hover:bg-green-50 rounded">About</a>
-                    <a href="#education" class="block px-3 py-2 text-gray-700 hover:bg-green-50 rounded">Education</a>
-                    <a href="#donate" class="block px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700">Donate</a>
+                    <a href="#home" class="block px-3 py-2 text-gray-700 hover:bg-[#9B6D5A]/10 rounded">Home</a>
+                    <a href="#about" class="block px-3 py-2 text-gray-700 hover:bg-[#9B6D5A]/10 rounded">About</a>
+                    <a href="#education" class="block px-3 py-2 text-gray-700 hover:bg-[#9B6D5A]/10 rounded">Education</a>
+                    <a href="#donate" class="block px-3 py-2 bg-[#9B6D5A] text-white rounded hover:bg-[#8A5C49]">Donate</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Carousel Section -->
-    <section id="home" class="bg-white py-8">
+    <!-- Updated carousel to show 3 flyers in a grid, entire card is clickable -->
+    <section id="home" class="bg-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="relative">
-                <div id="carousel" class="relative h-96 bg-gray-200 rounded-lg overflow-hidden">
-                    <div class="carousel-item active cursor-pointer" onclick="openModal('event1')">
-                        <img src="/placeholder.svg?height=400&width=1200" alt="Event 1" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                            <h3 class="text-white text-2xl font-bold">Ramadan Programs 2025</h3>
-                            <p class="text-white/90">Click for more details and registration</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item cursor-pointer" onclick="openModal('event2')">
-                        <img src="/placeholder.svg?height=400&width=1200" alt="Event 2" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                            <h3 class="text-white text-2xl font-bold">Youth Islamic Studies</h3>
-                            <p class="text-white/90">Click for more details and registration</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item cursor-pointer" onclick="openModal('event3')">
-                        <img src="/placeholder.svg?height=400&width=1200" alt="Event 3" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                            <h3 class="text-white text-2xl font-bold">Community Iftar</h3>
-                            <p class="text-white/90">Click for more details and registration</p>
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Upcoming Events</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Event 1 -->
+                <div class="cursor-pointer group" onclick="openModal('event1')">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
+                        <img src="/placeholder.svg?height=300&width=400" alt="Ramadan Programs 2025" class="w-full h-64 object-cover">
+                        <div class="p-6 bg-gradient-to-br from-[#9B6D5A]/5 to-[#9B6D5A]/10 group-hover:from-[#9B6D5A]/10 group-hover:to-[#9B6D5A]/20 transition">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Ramadan Programs 2025</h3>
+                            <p class="text-gray-600">Click for details and registration</p>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Carousel Controls -->
-                <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg">
-                    <svg class="h-6 w-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-                <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg">
-                    <svg class="h-6 w-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </button>
+                <!-- Event 2 -->
+                <div class="cursor-pointer group" onclick="openModal('event2')">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
+                        <img src="/placeholder.svg?height=300&width=400" alt="Youth Islamic Studies" class="w-full h-64 object-cover">
+                        <div class="p-6 bg-gradient-to-br from-[#9B6D5A]/5 to-[#9B6D5A]/10 group-hover:from-[#9B6D5A]/10 group-hover:to-[#9B6D5A]/20 transition">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Youth Islamic Studies</h3>
+                            <p class="text-gray-600">Click for details and registration</p>
+                        </div>
+                    </div>
+                </div>
                 
-                <!-- Carousel Indicators -->
-                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-                    <button onclick="goToSlide(0)" class="carousel-indicator w-3 h-3 rounded-full bg-white"></button>
-                    <button onclick="goToSlide(1)" class="carousel-indicator w-3 h-3 rounded-full bg-white/50"></button>
-                    <button onclick="goToSlide(2)" class="carousel-indicator w-3 h-3 rounded-full bg-white/50"></button>
+                <!-- Event 3 -->
+                <div class="cursor-pointer group" onclick="openModal('event3')">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
+                        <img src="/placeholder.svg?height=300&width=400" alt="Community Iftar" class="w-full h-64 object-cover">
+                        <div class="p-6 bg-gradient-to-br from-[#9B6D5A]/5 to-[#9B6D5A]/10 group-hover:from-[#9B6D5A]/10 group-hover:to-[#9B6D5A]/20 transition">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Community Iftar</h3>
+                            <p class="text-gray-600">Click for details and registration</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -119,7 +111,8 @@
                 </button>
             </div>
             <div id="modalContent" class="mb-6"></div>
-            <a id="modalRegister" href="#" class="inline-block bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">Register Now</a>
+            <!-- Updated button color to match brand -->
+            <a id="modalRegister" href="#" class="inline-block bg-[#9B6D5A] text-white px-6 py-3 rounded-lg hover:bg-[#8A5C49] transition">Register Now</a>
         </div>
     </div>
 
@@ -129,10 +122,13 @@
             <div class="grid md:grid-cols-2 gap-8 items-start">
                 <!-- About Content -->
                 <div>
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Welcome to Greater Islamic Center</h2>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Welcome to Georgetown Islamic Center</h2>
                     <div class="prose prose-lg text-gray-600 space-y-4">
-                        <p>The Greater Islamic Center serves the Muslim community in Round Rock and surrounding areas, providing a place for worship, education, and community gathering.</p>
-                        <img src="/placeholder.svg?height=300&width=500" alt="Mosque Interior" class="rounded-lg shadow-md my-6 w-full">
+                        <p>The Georgetown Islamic Center serves the Muslim community in Round Rock and surrounding areas, providing a place for worship, education, and community gathering.</p>
+                        <!-- Replaced image with YouTube embed -->
+                        <div class="rounded-lg overflow-hidden shadow-md my-6">
+                            <iframe width="100%" height="315" src="https://www.youtube.com/embed/qxhQ3qq2T-w" title="Georgetown Islamic Center Vision" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full"></iframe>
+                        </div>
                         <p>Our mission is to foster a strong Islamic identity while promoting understanding, peace, and service to all members of our community.</p>
                         <ul class="list-disc list-inside space-y-2 text-gray-700">
                             <li>Daily five-time prayers</li>
@@ -146,14 +142,15 @@
                 
                 <!-- Prayer Times -->
                 <div>
-                    <div class="bg-white rounded-lg shadow-lg p-6 sticky top-20">
+                    <div class="bg-white rounded-lg shadow-lg p-6 sticky top-24">
                         <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Prayer Times</h3>
                         <div id="prayer-times" 
                              hx-get="/api/prayer-times" 
                              hx-trigger="load"
                              hx-indicator="#prayer-loading">
                             <div id="prayer-loading" class="text-center py-8">
-                                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+                                <!-- Updated spinner color to match brand -->
+                                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#9B6D5A]"></div>
                                 <p class="text-gray-600 mt-2">Loading prayer times...</p>
                             </div>
                         </div>
@@ -163,11 +160,11 @@
         </div>
     </section>
 
-    <!-- Newsletter Section -->
-    <section class="py-16 bg-green-600">
+    <!-- Newsletter Section - Updated colors to brown theme -->
+    <section class="py-16 bg-[#9B6D5A]">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl font-bold text-white mb-4">Stay Connected</h2>
-            <p class="text-green-100 mb-8">Subscribe to our newsletter for updates on events, programs, and announcements.</p>
+            <p class="text-white/90 mb-8">Subscribe to our newsletter for updates on events, programs, and announcements.</p>
             <form hx-post="/api/newsletter" 
                   hx-target="#newsletter-result" 
                   hx-swap="innerHTML"
@@ -179,7 +176,7 @@
                            required
                            class="flex-1 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white">
                     <button type="submit" 
-                            class="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-green-50 transition">
+                            class="bg-white text-[#9B6D5A] px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition">
                         Subscribe
                     </button>
                 </div>
@@ -202,14 +199,14 @@
                         <input type="text" 
                                name="name" 
                                required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9B6D5A]">
                     </div>
                     <div>
                         <label class="block text-gray-700 font-medium mb-2">Email</label>
                         <input type="email" 
                                name="email" 
                                required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9B6D5A]">
                     </div>
                 </div>
                 <div>
@@ -217,18 +214,19 @@
                     <input type="text" 
                            name="subject" 
                            required
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9B6D5A]">
                 </div>
                 <div>
                     <label class="block text-gray-700 font-medium mb-2">Message</label>
                     <textarea name="message" 
                               rows="5" 
                               required
-                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"></textarea>
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9B6D5A]"></textarea>
                 </div>
                 <div id="contact-result" class="mb-4"></div>
+                <!-- Updated button color to match brand -->
                 <button type="submit" 
-                        class="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition">
+                        class="w-full bg-[#9B6D5A] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#8A5C49] transition">
                     Send Message
                 </button>
             </form>
@@ -240,7 +238,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-3 gap-8 mb-8">
                 <div>
-                    <h3 class="text-xl font-bold mb-4">Greater Islamic Center</h3>
+                    <h3 class="text-xl font-bold mb-4">Georgetown Islamic Center</h3>
                     <p class="text-gray-400">Serving the Muslim community in Round Rock and surrounding areas.</p>
                 </div>
                 <div>
@@ -261,7 +259,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 Greater Islamic Center. All rights reserved.</p>
+                <p>&copy; 2025 Georgetown Islamic Center. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -272,37 +270,6 @@
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('open');
         }
-
-        // Carousel functionality
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.carousel-item');
-        const indicators = document.querySelectorAll('.carousel-indicator');
-
-        function showSlide(n) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            indicators.forEach(ind => ind.classList.remove('bg-white'));
-            indicators.forEach(ind => ind.classList.add('bg-white/50'));
-            
-            currentSlide = (n + slides.length) % slides.length;
-            slides[currentSlide].classList.add('active');
-            indicators[currentSlide].classList.remove('bg-white/50');
-            indicators[currentSlide].classList.add('bg-white');
-        }
-
-        function nextSlide() {
-            showSlide(currentSlide + 1);
-        }
-
-        function prevSlide() {
-            showSlide(currentSlide - 1);
-        }
-
-        function goToSlide(n) {
-            showSlide(n);
-        }
-
-        // Auto-advance carousel
-        setInterval(nextSlide, 5000);
 
         // Modal functionality
         const eventData = {
