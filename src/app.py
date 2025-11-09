@@ -21,7 +21,7 @@ app.add_middleware(
 app.mount("/public", StaticFiles(directory="public"), name="public")
 
 carousel_index = 0
-total_events = 9
+total_events = 4
 
 # Serve static files
 @app.get("/", response_class=HTMLResponse)
@@ -31,33 +31,30 @@ async def read_index():
 
 @app.get("/api/carousel")
 async def get_carousel(offset: int = 0):
-    """Return carousel content with navigation"""
+    """Return carousel content with navigation using HTMX"""
     global carousel_index
     
-    # Update index based on offset
     if offset != 0:
         carousel_index = (carousel_index + offset) % total_events
     
-    # Calculate which events to show
-    # Show 3 on desktop, 1 on mobile (handled by CSS)
+    # Calculate which events to show - 3 on desktop, 1 on mobile
     events_to_show = []
     for i in range(3):
         event_idx = (carousel_index + i) % total_events + 1
         events_to_show.append(event_idx)
     
-    # Build HTML with responsive grid
-    html = f"""
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    """
+    html = '<div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">\n'
     
     for idx, event_num in enumerate(events_to_show):
         # Only show first event on mobile
         mobile_class = "" if idx == 0 else "hidden md:block"
         html += f"""
         <div class="cursor-pointer group {mobile_class}" onclick="openModal('event{event_num}')">
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
-                <img src="/public/event{event_num}.jpeg" alt="Event {event_num}" class="w-full h-64 object-cover">
-                <div class="p-6 bg-gradient-to-br from-[#9B6D5A]/5 to-[#9B6D5A]/10 group-hover:from-[#9B6D5A]/10 group-hover:to-[#9B6D5A]/20 transition">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
+                <div class="flex-1 overflow-hidden bg-gray-100">
+                    <img src="/public/event{event_num}.jpeg" alt="Event {event_num}" class="w-full h-full object-contain hover:scale-105 transition-transform duration-300">
+                </div>
+                <div class="p-6 bg-gradient-to-br from-[#9B6D5A]/5 to-[#9B6D5A]/10 group-hover:from-[#9B6D5A]/10 group-hover:to-[#9B6D5A]/20 transition-all duration-300">
                     <h3 class="text-xl font-bold text-gray-800 mb-2">Event {event_num}</h3>
                     <p class="text-gray-600">Click for details and registration</p>
                 </div>
@@ -92,6 +89,15 @@ async def get_prayer_times():
                 {'name': 'Maghrib', 'adhan': adhans.get('maghrib', 'N/A'), 'iqama': iqamas.get('maghrib', 'N/A')},
                 {'name': 'Isha', 'adhan': adhans.get('isha', 'N/A'), 'iqama': iqamas.get('isha', 'N/A')},
             ]
+            
+            jummah1_iqama = iqamas.get('jummah1', 'N/A')
+            jummah2_iqama = iqamas.get('jummah2', 'N/A')
+            
+            # Both Jummah prayers start at 1pm, adjust iqamah times
+            if jummah1_iqama != 'N/A':
+                prayers.append({'name': 'Jummah 1', 'adhan': '1:00 PM', 'iqama': '1:30 PM'})
+            if jummah2_iqama != 'N/A':
+                prayers.append({'name': 'Jummah 2', 'adhan': '1:00 PM', 'iqama': '2:30 PM'})
             
             # Remove AM/PM for cleaner display
             for prayer in prayers:
