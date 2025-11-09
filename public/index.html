@@ -110,23 +110,7 @@
     </section>
 
     <!-- Event Modal -->
-    <div id="eventModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onclick="closeModal(event)">
-        <div class="bg-white rounded-lg max-w-2xl w-full p-6" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-start mb-4">
-                <h2 id="modalTitle" class="text-2xl font-bold text-gray-800"></h2>
-                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-            <div id="modalContent" class="mb-6">
-                <img id="modalImage" src="/placeholder.svg" alt="" class="w-full rounded-lg mb-4">
-            </div>
-            <!-- Updated button color to match brand -->
-            <a id="modalRegister" href="#" class="inline-block bg-[#9B6D5A] text-white px-6 py-3 rounded-lg hover:bg-[#8A5C49] transition">Register Now</a>
-        </div>
-    </div>
+    <div id="modal-container"></div>
 
     <!-- About & Prayer Times Section -->
     <section class="py-16 bg-gray-50">

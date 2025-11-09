@@ -49,7 +49,10 @@ async def get_carousel(offset: int = 0):
         # Only show first event on mobile
         mobile_class = "" if idx == 0 else "hidden md:block"
         html += f"""
-        <div class="cursor-pointer group {mobile_class}" onclick="openModal('event{event_num}')">
+        <div class="cursor-pointer group {mobile_class}" 
+             hx-get="/api/modal/event{event_num}" 
+             hx-target="#modal-container" 
+             hx-swap="innerHTML">
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
                 <div class="flex-1 overflow-hidden bg-gray-100">
                     <img src="/public/events/event{event_num}.jpeg" alt="Event {event_num}" class="w-full h-full object-contain hover:scale-105 transition-transform duration-300">
@@ -63,6 +66,35 @@ async def get_carousel(offset: int = 0):
         """
     
     html += "</div>"
+    return HTMLResponse(content=html)
+
+@app.get("/api/modal/{event_id}")
+async def get_modal(event_id: str):
+    """Return modal HTML for an event"""
+    event_title = event_id.replace('event', 'Event ')
+    
+    html = f"""
+    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" 
+         id="event-modal"
+         onclick="if(event.target.id === 'event-modal') document.getElementById('modal-container').innerHTML = ''">
+        <div class="bg-white rounded-lg max-w-md w-full p-6" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-start mb-4">
+                <h2 class="text-2xl font-bold text-gray-800">{event_title}</h2>
+                <button onclick="document.getElementById('modal-container').innerHTML = ''" 
+                        class="text-gray-500 hover:text-gray-700">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <a href="#register" 
+               class="inline-block w-full text-center bg-[#9B6D5A] text-white px-6 py-3 rounded-lg hover:bg-[#8A5C49] transition font-semibold">
+                Register Now
+            </a>
+        </div>
+    </div>
+    """
+    
     return HTMLResponse(content=html)
 
 @app.get("/api/prayer-times")
