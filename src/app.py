@@ -53,7 +53,7 @@ async def get_carousel(offset: int = 0):
              hx-get="/api/modal/event{event_num}" 
              hx-target="#modal-container" 
              hx-swap="innerHTML">
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-[380px] md:h-[550px]">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-[450px] md:h-[550px]">
                 <img src="/public/events/event{event_num}.jpeg" alt="Event {event_num}" class="w-full h-full object-cover">
             </div>
         </div>
