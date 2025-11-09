@@ -53,14 +53,8 @@ async def get_carousel(offset: int = 0):
              hx-get="/api/modal/event{event_num}" 
              hx-target="#modal-container" 
              hx-swap="innerHTML">
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
-                <div class="flex-1 overflow-hidden bg-gray-100">
-                    <img src="/public/events/event{event_num}.jpeg" alt="Event {event_num}" class="w-full h-full object-contain hover:scale-105 transition-transform duration-300">
-                </div>
-                <div class="p-6 bg-gradient-to-br from-[#9B6D5A]/5 to-[#9B6D5A]/10 group-hover:from-[#9B6D5A]/10 group-hover:to-[#9B6D5A]/20 transition-all duration-300">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Event {event_num}</h3>
-                    <p class="text-gray-600">Click for details and registration</p>
-                </div>
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300">
+                <img src="/public/events/event{event_num}.jpeg" alt="Event {event_num}" class="w-full h-full object-contain">
             </div>
         </div>
         """
@@ -140,9 +134,6 @@ async def get_prayer_times():
             
             # Build HTML table
             html = f"""
-            <div class="text-sm text-gray-600 mb-4 text-center">
-                Updated: {datetime.now().strftime('%b %d, %Y')}
-            </div>
             <div class="space-y-2">
                 <div class="grid grid-cols-3 gap-4 pb-2 border-b-2 border-gray-200 font-semibold text-gray-700">
                     <div>Prayer</div>
@@ -154,7 +145,7 @@ async def get_prayer_times():
             for prayer in prayers:
                 iqama_text = prayer['iqama'] if prayer['iqama'] else '-'
                 html += f"""
-                <div class="grid grid-cols-3 gap-4 py-3 border-b border-gray-100 hover:bg-gray-50 transition">
+                <div class="grid grid-cols-3 gap-4 py-3 border-b border-gray-100">
                     <div class="font-semibold text-gray-800">{prayer['name']}</div>
                     <div class="text-center text-gray-600">{prayer['adhan']}</div>
                     <div class="text-center text-gray-600">{iqama_text}</div>
@@ -162,11 +153,11 @@ async def get_prayer_times():
                 """
             
             if jummah_prayers:
-                html += '<div class="my-4 border-t-2 border-gray-200"></div>'
+                html += '<div class="border-b-2 border-gray-200 my-2"></div>'
                 
                 for prayer in jummah_prayers:
                     html += f"""
-                    <div class="grid grid-cols-3 gap-4 py-3 border-b border-gray-100 hover:bg-gray-50 transition">
+                    <div class="grid grid-cols-3 gap-4 py-3 border-b border-gray-100">
                         <div class="font-semibold text-gray-800">{prayer['name']}</div>
                         <div class="text-center text-gray-600">{prayer['adhan']}</div>
                         <div class="text-center text-gray-600">{prayer['iqama']}</div>
