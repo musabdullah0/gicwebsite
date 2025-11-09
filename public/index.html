@@ -17,6 +17,14 @@
         .hover-brand-brown:hover { background-color: #8A5C49; }
         .border-brand-brown { border-color: #9B6D5A; }
         .ring-brand-brown { --tw-ring-color: #9B6D5A; }
+        /* Add smooth fade animation for carousel transitions */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .carousel-fade {
+            animation: fadeIn 0.4s ease-out;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -26,7 +34,7 @@
             <!-- Fixed alignment and added logo image -->
             <div class="flex justify-between items-center h-20">
                 <div class="flex items-center gap-3">
-                    <img src="/logo.png" alt="Georgetown Islamic Center" class="h-16 w-auto">
+                    <img src="/public/logo.png" alt="Georgetown Islamic Center" class="h-16 w-auto">
                     <span class="text-xl font-bold text-gray-800 hidden sm:block">Georgetown Islamic Center</span>
                 </div>
                 
@@ -80,7 +88,8 @@
                 <div id="carousel-content" 
                      hx-get="/api/carousel?offset=0" 
                      hx-trigger="load"
-                     hx-swap="innerHTML">
+                     hx-swap="innerHTML"
+                     class="carousel-fade">
                     <div class="text-center py-12">
                         <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#9B6D5A]"></div>
                     </div>

@@ -43,7 +43,7 @@ async def get_carousel(offset: int = 0):
         event_idx = (carousel_index + i) % total_events + 1
         events_to_show.append(event_idx)
     
-    html = '<div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">\n'
+    html = '<div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 carousel-fade">\n'
     
     for idx, event_num in enumerate(events_to_show):
         # Only show first event on mobile
@@ -93,11 +93,11 @@ async def get_prayer_times():
             jummah1_iqama = iqamas.get('jummah1', 'N/A')
             jummah2_iqama = iqamas.get('jummah2', 'N/A')
             
-            # Both Jummah prayers start at 1pm, adjust iqamah times
+            jummah_prayers = []
             if jummah1_iqama != 'N/A':
-                prayers.append({'name': 'Jummah 1', 'adhan': '1:00 PM', 'iqama': '1:30 PM'})
+                jummah_prayers.append({'name': 'Jummah 1', 'adhan': '1:00 PM', 'iqama': '1:30 PM'})
             if jummah2_iqama != 'N/A':
-                prayers.append({'name': 'Jummah 2', 'adhan': '1:00 PM', 'iqama': '2:30 PM'})
+                jummah_prayers.append({'name': 'Jummah 2', 'adhan': '1:00 PM', 'iqama': '2:30 PM'})
             
             # Remove AM/PM for cleaner display
             for prayer in prayers:
@@ -129,7 +129,30 @@ async def get_prayer_times():
                 </div>
                 """
             
+            if jummah_prayers:
+                html += '<div class="my-4 border-t-2 border-gray-200"></div>'
+                
+                for prayer in jummah_prayers:
+                    html += f"""
+                    <div class="grid grid-cols-3 gap-4 py-3 border-b border-gray-100 hover:bg-gray-50 transition">
+                        <div class="font-semibold text-gray-800">{prayer['name']}</div>
+                        <div class="text-center text-gray-600">{prayer['adhan']}</div>
+                        <div class="text-center text-gray-600">{prayer['iqama']}</div>
+                    </div>
+                    """
+            
             html += "</div>"
+            
+            html += """
+            <div class="mt-6 text-center">
+                <a href="https://masjidal.com/widget/monthly/?masjid_id=xwLVMDKJ" 
+                   target="_blank"
+                   class="inline-block bg-[#9B6D5A] text-white px-6 py-3 rounded-lg hover:bg-[#8A5C49] transition font-semibold">
+                    Monthly Prayer Timetable
+                </a>
+            </div>
+            """
+            
             return HTMLResponse(content=html)
             
     except Exception as e:
