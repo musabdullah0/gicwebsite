@@ -62,39 +62,40 @@
     <section id="home" class="bg-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Upcoming Events</h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <!-- Event 1 -->
-                <div class="cursor-pointer group" onclick="openModal('event1')">
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
-                        <img src="/placeholder.svg?height=300&width=400" alt="Ramadan Programs 2025" class="w-full h-64 object-cover">
-                        <div class="p-6 bg-gradient-to-br from-[#9B6D5A]/5 to-[#9B6D5A]/10 group-hover:from-[#9B6D5A]/10 group-hover:to-[#9B6D5A]/20 transition">
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Ramadan Programs 2025</h3>
-                            <p class="text-gray-600">Click for details and registration</p>
-                        </div>
+            
+            <!-- Carousel Container -->
+            <div class="relative">
+                <!-- Left Arrow -->
+                <button 
+                    hx-get="/api/carousel?offset=-1" 
+                    hx-target="#carousel-content"
+                    hx-swap="innerHTML"
+                    class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-50 transition">
+                    <svg class="w-6 h-6 text-[#9B6D5A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                
+                <!-- Carousel Content -->
+                <div id="carousel-content" 
+                     hx-get="/api/carousel?offset=0" 
+                     hx-trigger="load"
+                     hx-swap="innerHTML">
+                    <div class="text-center py-12">
+                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#9B6D5A]"></div>
                     </div>
                 </div>
                 
-                <!-- Event 2 -->
-                <div class="cursor-pointer group" onclick="openModal('event2')">
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
-                        <img src="/placeholder.svg?height=300&width=400" alt="Youth Islamic Studies" class="w-full h-64 object-cover">
-                        <div class="p-6 bg-gradient-to-br from-[#9B6D5A]/5 to-[#9B6D5A]/10 group-hover:from-[#9B6D5A]/10 group-hover:to-[#9B6D5A]/20 transition">
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Youth Islamic Studies</h3>
-                            <p class="text-gray-600">Click for details and registration</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Event 3 -->
-                <div class="cursor-pointer group" onclick="openModal('event3')">
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
-                        <img src="/placeholder.svg?height=300&width=400" alt="Community Iftar" class="w-full h-64 object-cover">
-                        <div class="p-6 bg-gradient-to-br from-[#9B6D5A]/5 to-[#9B6D5A]/10 group-hover:from-[#9B6D5A]/10 group-hover:to-[#9B6D5A]/20 transition">
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Community Iftar</h3>
-                            <p class="text-gray-600">Click for details and registration</p>
-                        </div>
-                    </div>
-                </div>
+                <!-- Right Arrow -->
+                <button 
+                    hx-get="/api/carousel?offset=1" 
+                    hx-target="#carousel-content"
+                    hx-swap="innerHTML"
+                    class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-50 transition">
+                    <svg class="w-6 h-6 text-[#9B6D5A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
             </div>
         </div>
     </section>
@@ -110,7 +111,9 @@
                     </svg>
                 </button>
             </div>
-            <div id="modalContent" class="mb-6"></div>
+            <div id="modalContent" class="mb-6">
+                <img id="modalImage" src="/placeholder.svg" alt="" class="w-full rounded-lg mb-4">
+            </div>
             <!-- Updated button color to match brand -->
             <a id="modalRegister" href="#" class="inline-block bg-[#9B6D5A] text-white px-6 py-3 rounded-lg hover:bg-[#8A5C49] transition">Register Now</a>
         </div>
@@ -271,30 +274,24 @@
             menu.classList.toggle('open');
         }
 
-        // Modal functionality
         const eventData = {
-            event1: {
-                title: 'Ramadan Programs 2025',
-                content: '<p class="text-gray-600 mb-4">Join us for a blessed Ramadan with daily Taraweeh prayers, Iftar gatherings, and special programs.</p><ul class="list-disc list-inside text-gray-600 space-y-2"><li>Daily Taraweeh prayers at 9:00 PM</li><li>Community Iftar every weekend</li><li>Quran recitation circles</li><li>Special programs for children</li></ul>',
-                registerLink: '#register-ramadan'
-            },
-            event2: {
-                title: 'Youth Islamic Studies',
-                content: '<p class="text-gray-600 mb-4">Comprehensive Islamic education program for youth ages 7-17.</p><ul class="list-disc list-inside text-gray-600 space-y-2"><li>Saturday classes: 10 AM - 12 PM</li><li>Quran, Hadith, and Islamic history</li><li>Qualified teachers</li><li>Age-appropriate curriculum</li></ul>',
-                registerLink: '#register-youth'
-            },
-            event3: {
-                title: 'Community Iftar',
-                content: '<p class="text-gray-600 mb-4">Join us for a community Iftar dinner bringing together Muslims and friends from all backgrounds.</p><ul class="list-disc list-inside text-gray-600 space-y-2"><li>Every Saturday during Ramadan</li><li>Delicious food provided</li><li>Family-friendly environment</li><li>Short reminder after Maghrib</li></ul>',
-                registerLink: '#register-iftar'
-            }
+            event1: { title: 'Event 1', image: '/event1.jpg', registerLink: '#register-event1' },
+            event2: { title: 'Event 2', image: '/event2.jpg', registerLink: '#register-event2' },
+            event3: { title: 'Event 3', image: '/event3.jpg', registerLink: '#register-event3' },
+            event4: { title: 'Event 4', image: '/event4.jpg', registerLink: '#register-event4' },
+            // event5: { title: 'Event 5', image: '/event5.jpg', registerLink: '#register-event5' },
+            // event6: { title: 'Event 6', image: '/event6.jpg', registerLink: '#register-event6' },
+            // event7: { title: 'Event 7', image: '/event7.jpg', registerLink: '#register-event7' },
+            // event8: { title: 'Event 8', image: '/event8.jpg', registerLink: '#register-event8' },
+            // event9: { title: 'Event 9', image: '/event9.jpg', registerLink: '#register-event9' }
         };
 
         function openModal(eventId) {
             const modal = document.getElementById('eventModal');
             const data = eventData[eventId];
             document.getElementById('modalTitle').textContent = data.title;
-            document.getElementById('modalContent').innerHTML = data.content;
+            document.getElementById('modalImage').src = data.image;
+            document.getElementById('modalImage').alt = data.title;
             document.getElementById('modalRegister').href = data.registerLink;
             modal.classList.remove('hidden');
         }

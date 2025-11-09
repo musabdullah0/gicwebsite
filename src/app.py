@@ -18,10 +18,55 @@ app.add_middleware(
 )
 
 # Serve static files
+app.mount("/public", StaticFiles(directory="public"), name="public")
+
+carousel_index = 0
+total_events = 9
+
+# Serve static files
 @app.get("/", response_class=HTMLResponse)
 async def read_index():
-    with open("src/index.html", "r") as f:
+    with open("public/index.html", "r") as f:
         return f.read()
+
+@app.get("/api/carousel")
+async def get_carousel(offset: int = 0):
+    """Return carousel content with navigation"""
+    global carousel_index
+    
+    # Update index based on offset
+    if offset != 0:
+        carousel_index = (carousel_index + offset) % total_events
+    
+    # Calculate which events to show
+    # Show 3 on desktop, 1 on mobile (handled by CSS)
+    events_to_show = []
+    for i in range(3):
+        event_idx = (carousel_index + i) % total_events + 1
+        events_to_show.append(event_idx)
+    
+    # Build HTML with responsive grid
+    html = f"""
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    """
+    
+    for idx, event_num in enumerate(events_to_show):
+        # Only show first event on mobile
+        mobile_class = "" if idx == 0 else "hidden md:block"
+        html += f"""
+        <div class="cursor-pointer group {mobile_class}" onclick="openModal('event{event_num}')">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
+                <img src="/public/event{event_num}.jpeg" alt="Event {event_num}" class="w-full h-64 object-cover">
+                <div class="p-6 bg-gradient-to-br from-[#9B6D5A]/5 to-[#9B6D5A]/10 group-hover:from-[#9B6D5A]/10 group-hover:to-[#9B6D5A]/20 transition">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Event {event_num}</h3>
+                    <p class="text-gray-600">Click for details and registration</p>
+                </div>
+            </div>
+        </div>
+        """
+    
+    html += "</div>"
+    return HTMLResponse(content=html)
 
 @app.get("/api/prayer-times")
 async def get_prayer_times():
